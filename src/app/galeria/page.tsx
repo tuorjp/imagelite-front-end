@@ -1,3 +1,5 @@
+'use client'
+
 import { Template } from '../components/Template'
 import { ImageCard } from '../components/ImageCard'
 import { useImageService } from '../resources/image/image.service'
