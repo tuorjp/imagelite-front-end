@@ -4,18 +4,21 @@ import { Template } from '../components/Template'
 import { ImageCard } from '../components/ImageCard'
 import { useImageService } from '../resources/image/image.services'
 import { Image } from '../resources/image/image.resource'
-import { useState } from 'react';
+import { useState } from 'react'
 
 export default function GaleriaPage() {
-    const [images, setImages] = useState<Image[]>([]);
-    const [query, setQuery] = useState<string>();
-    const [extension, setExtension] = useState<string>();
-    const useService = useImageService();
+    const [images, setImages] = useState<Image[]>([])
+    const [query, setQuery] = useState<string>()
+    const [extension, setExtension] = useState<string>()
+    const [load, setLoad] = useState(false)
+    const useService = useImageService()
     
     async function searchImages() {
-        const imagesResponse = await useService.buscar(query, extension);
-        setImages(imagesResponse);
-        console.table(imagesResponse);
+        setLoad(true)
+        const imagesResponse = await useService.buscar(query, extension)
+        setImages(imagesResponse)
+        setLoad(false)
+        console.table(imagesResponse)
     }
 
     function renderImageCard(img: Image) {
@@ -32,7 +35,7 @@ export default function GaleriaPage() {
     }
 
     function renderImageCards() {
-        return images.map((img, i) => renderImageCard(img));
+        return images.map((img, i) => renderImageCard(img))
     }
 
     return (
@@ -53,11 +56,16 @@ export default function GaleriaPage() {
                         <option value="JPEG">JPEG</option>
                         <option value="GIF">GIF</option>
                     </select>
-                    <button className='bg-blue-500 text-white px-4 py-2 rounded-md' onClick={searchImages}>
+                    <button 
+                        className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-300' 
+                        onClick={searchImages}
+                    >
                         Search
                     </button>
-                    <button className='bg-green-500 text-white px-4 py-2 rounded-md'>
-                        Add image
+                    <button 
+                        className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-300'
+                    >
+                        Add new
                     </button>
                 </div>
             </section>
