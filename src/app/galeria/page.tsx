@@ -39,7 +39,7 @@ export default function GaleriaPage() {
     }
 
     return (
-        <Template>
+        <Template loading={load}>
             <section className='flex flex-col items-center justify-center my-5'>
                 <div className='flex space-x-4'>
                     <input 
