@@ -18,6 +18,7 @@ const formSchema  :FormProps = { name: '', file: '', tags: '' }
 
 export default function FormularioPage() {
     const [imagePreview, setImagePreview] = useState<string>()
+    const [loading, setLoading] = useState<boolean>(false)
 
     const formFormik = useFormik({
         initialValues: formSchema,
@@ -28,17 +29,19 @@ export default function FormularioPage() {
     })
 
     async function handleSubmit(imgData: FormProps) {
+        setLoading(true)
         const formData = new FormData()
         const service = useImageService()
-
+        
         formData.append('file', imgData.file)
         formData.append('name', imgData.name)
         formData.append('tags', imgData.tags)
-
+        
         await service.salvar(formData)
-
+        
         formFormik.resetForm()
         setImagePreview('')
+        setLoading(false)
     }
 
     function onFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -50,14 +53,15 @@ export default function FormularioPage() {
     }
 
     return (
-        <Template>
+        <Template loading={loading}>
             <section className="flex flex-col items-center justify-center my-5">
                 <h5 className="mt-3 mb-10 text-3xl font-extrabold tracking-tight text-gray-900">Nova imagem</h5>
                 <form onSubmit={formFormik.handleSubmit}>
                     <div className="grid grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-700">Name: *</label>
                         <InputText 
-                            id="name" 
+                            id="name"
+                            value={formFormik.values.name}
                             onChange={formFormik.handleChange} 
                             placeholder="Type the image's name"
                         />
@@ -66,7 +70,8 @@ export default function FormularioPage() {
                     <div className="mt-5 grid grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-700">Tags: *</label>
                         <InputText 
-                            id="tags" 
+                            id="tags"
+                            value={formFormik.values.tags}
                             onChange={formFormik.handleChange} 
                             placeholder="Type the tags comma separeted"
                         />
