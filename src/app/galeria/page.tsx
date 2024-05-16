@@ -7,6 +7,7 @@ import { Image } from '../resources/image/image.resource'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '../components/Button'
+import { InputText } from '../components/InputText'
 
 export default function GaleriaPage() {
     const [images, setImages] = useState<Image[]>([])
@@ -44,11 +45,7 @@ export default function GaleriaPage() {
         <Template loading={load}>
             <section className='flex flex-col items-center justify-center my-5'>
                 <div className='flex space-x-4'>
-                    <input 
-                        type="text" 
-                        className='border px-3 py-2 rounded-md text-gray-900'
-                        onChange={ev => setQuery(ev.target.value)}
-                    />
+                    <InputText placeholder='Type name or Tags' onChange={event => setQuery(event.target.value)}/>
                     <select 
                         className='border px-4 py-2 rounded-md text-gray-900' 
                         onChange={ev => setExtension(ev.target.value)}
