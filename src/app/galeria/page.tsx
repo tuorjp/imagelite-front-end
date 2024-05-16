@@ -5,6 +5,8 @@ import { ImageCard } from '../components/ImageCard'
 import { useImageService } from '../resources/image/image.services'
 import { Image } from '../resources/image/image.resource'
 import { useState } from 'react'
+import Link from 'next/link'
+import { Button } from '../components/Button'
 
 export default function GaleriaPage() {
     const [images, setImages] = useState<Image[]>([])
@@ -56,17 +58,15 @@ export default function GaleriaPage() {
                         <option value="JPEG">JPEG</option>
                         <option value="GIF">GIF</option>
                     </select>
-                    <button 
-                        className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-300' 
-                        onClick={searchImages}
-                    >
-                        Search
-                    </button>
-                    <button 
-                        className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-300'
-                    >
-                        Add new
-                    </button>
+                    <Button onClick={searchImages} color='bg-blue-500' label='Search' hover='bg-blue-300'/>
+                    <Link href="/formulario">
+                        {/* <button 
+                            className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-300'
+                        >
+                            Add new
+                        </button> */}
+                        <Button color='bg-green-500' hover='bg-green-300' label='Add new'/>
+                    </Link>
                 </div>
             </section>
             <section className='grid grid-cols-3 gap-8'>

@@ -1,5 +1,9 @@
+import { Template } from "../components/Template"
+
 export default function FormularioPage() {
     return (
-        <h1>Formulário</h1>
+        <Template>
+            <h1 className="text-gray-900">Formulário</h1>
+        </Template>
     )
 }
