@@ -7,6 +7,7 @@ import { Template } from "../components/Template"
 import { useFormik } from "formik"
 import { useState } from "react"
 import { useImageService } from "../resources/image/image.services"
+import { useNotification } from "../utils/notifications"
 
 interface FormProps {
     name: string;
@@ -19,6 +20,7 @@ const formSchema  :FormProps = { name: '', file: '', tags: '' }
 export default function FormularioPage() {
     const [imagePreview, setImagePreview] = useState<string>()
     const [loading, setLoading] = useState<boolean>(false)
+    const notification = useNotification()
 
     const formFormik = useFormik({
         initialValues: formSchema,
@@ -42,6 +44,7 @@ export default function FormularioPage() {
         formFormik.resetForm()
         setImagePreview('')
         setLoading(false)
+        notification.notify('Image sent successfully', 'success')
     }
 
     function onFileChange(event: React.ChangeEvent<HTMLInputElement>) {

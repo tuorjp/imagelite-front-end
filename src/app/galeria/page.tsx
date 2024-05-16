@@ -8,6 +8,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '../components/Button'
 import { InputText } from '../components/InputText'
+import { useNotification } from "../utils/notifications"
 
 export default function GaleriaPage() {
     const [images, setImages] = useState<Image[]>([])
@@ -15,10 +16,16 @@ export default function GaleriaPage() {
     const [extension, setExtension] = useState<string>()
     const [load, setLoad] = useState(false)
     const useService = useImageService()
+    const notification = useNotification()
     
     async function searchImages() {
         setLoad(true)
         const imagesResponse = await useService.buscar(query, extension)
+
+        if(!imagesResponse.length) {
+            notification.notify('No results found', 'warning')
+        }
+
         setImages(imagesResponse)
         setLoad(false)
         console.table(imagesResponse)
