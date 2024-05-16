@@ -6,6 +6,10 @@ interface InputTextProps {
     value?: string;
 }
 
+interface FieldErrorProps {
+    error: any | null
+}
+
 export const InputText: React.FC<InputTextProps> = ({ onChange, style, placeholder, id, value }) => {
     return (
         <input 
@@ -17,4 +21,14 @@ export const InputText: React.FC<InputTextProps> = ({ onChange, style, placehold
             value={value}
         />
     )
+}
+
+export const FieldError: React.FC<FieldErrorProps> = ({error}) => {
+    if(error) {
+        return (
+            <span className="text-red-500 text-sm">{error}</span>
+        )
+    }
+
+    return false
 }

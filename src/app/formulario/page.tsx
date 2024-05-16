@@ -2,20 +2,13 @@
 
 import Link from "next/link"
 import { Button } from "../components/Button"
-import { InputText } from "../components/InputText"
+import { InputText, FieldError } from "../components/InputText"
 import { Template } from "../components/Template"
 import { useFormik } from "formik"
 import { useState } from "react"
 import { useImageService } from "../resources/image/image.services"
 import { useNotification } from "../utils/notifications"
-
-interface FormProps {
-    name: string;
-    tags: string;
-    file: any;
-}
-
-const formSchema  :FormProps = { name: '', file: '', tags: '' }
+import { FormProps, formSchema, formValidationSchema } from "./validations/formSchema"
 
 export default function FormularioPage() {
     const [imagePreview, setImagePreview] = useState<string>()
@@ -24,10 +17,8 @@ export default function FormularioPage() {
 
     const formFormik = useFormik({
         initialValues: formSchema,
-        onSubmit: (imageData: FormProps) => {
-            console.table(imageData)
-            handleSubmit(imageData)
-        } // ou só handleSubmit ao invés da arrow function
+        onSubmit: handleSubmit,
+        validationSchema: formValidationSchema
     })
 
     async function handleSubmit(imgData: FormProps) {
@@ -68,6 +59,7 @@ export default function FormularioPage() {
                             onChange={formFormik.handleChange} 
                             placeholder="Type the image's name"
                         />
+                        <FieldError error={formFormik.errors.name}/>
                     </div>
 
                     <div className="mt-5 grid grid-cols-1">
@@ -78,10 +70,12 @@ export default function FormularioPage() {
                             onChange={formFormik.handleChange} 
                             placeholder="Type the tags comma separeted"
                         />
+                        <FieldError error={formFormik.errors.tags}/>
                     </div>
 
                     <div className="mt-5 grid grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-700">Image: *</label>
+                        <FieldError error={formFormik.errors.file}/>
                         <div className="mt-2 flex justify-center rounded-lg border-dashed border-gray-900/25 px-6 py-10">
                             <div className="text-center">                                
                                 {
