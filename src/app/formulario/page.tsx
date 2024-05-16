@@ -6,6 +6,7 @@ import { InputText } from "../components/InputText"
 import { Template } from "../components/Template"
 import { useFormik } from "formik"
 import { useState } from "react"
+import { useImageService } from "../resources/image/image.services"
 
 interface FormProps {
     name: string;
@@ -22,8 +23,23 @@ export default function FormularioPage() {
         initialValues: formSchema,
         onSubmit: (imageData: FormProps) => {
             console.table(imageData)
-        }
+            handleSubmit(imageData)
+        } // ou só handleSubmit ao invés da arrow function
     })
+
+    async function handleSubmit(imgData: FormProps) {
+        const formData = new FormData()
+        const service = useImageService()
+
+        formData.append('file', imgData.file)
+        formData.append('name', imgData.name)
+        formData.append('tags', imgData.tags)
+
+        await service.salvar(formData)
+
+        formFormik.resetForm()
+        setImagePreview('')
+    }
 
     function onFileChange(event: React.ChangeEvent<HTMLInputElement>) {
         if(event.target.files) {
