@@ -10,10 +10,10 @@ export const Template: React.FC<TemplateProps> = ({children, loading = false}: T
     return (
         <>
             <Header />
-            <div className={`${loading ? 'animate-pulse' : ''} container mx-auto mt-8 px-4`}>
+            <div className={`${loading ? 'animate-pulse' : ''} container mx-auto mt-8 px-4 min-h-screen`}>
                 {
                     loading && 
-                    <div className="text-center">
+                    <div className="text-center flex items-center justify-center min-h-screen">
                         <Spinner />
                     </div>
                 }

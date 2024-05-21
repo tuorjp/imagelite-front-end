@@ -64,11 +64,6 @@ export default function GaleriaPage() {
                     </select>
                     <Button onClick={searchImages} color='bg-blue-500' label='Search' hover='bg-blue-300'/>
                     <Link href="/formulario">
-                        {/* <button 
-                            className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-300'
-                        >
-                            Add new
-                        </button> */}
                         <Button color='bg-green-500' hover='bg-green-300' label='Add new'/>
                     </Link>
                 </div>
