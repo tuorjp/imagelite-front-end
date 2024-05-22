@@ -15,9 +15,9 @@ export const Template: React.FC<TemplateProps> = ({children, loading = false}: T
                 {
                     loading && 
                     <div className="text-center flex flex-col gap-4 items-center justify-start min-h-screen">
-                        {/* <Spinner /> */}
-                        <ImagesLoading />
-                        <ImagesLoading />
+                        <Spinner />
+                        {/* <ImagesLoading />
+                        <ImagesLoading /> */}
                     </div>
                 }
                 {!loading && children}
