@@ -1,3 +1,4 @@
+import { ImagesLoading } from "../ImageLoading";
 import { Spinner } from "../Spinner";
 import { ToastContainer } from "react-toastify"
 
@@ -13,8 +14,10 @@ export const Template: React.FC<TemplateProps> = ({children, loading = false}: T
             <div className={`${loading ? 'animate-pulse' : ''} container mx-auto mt-8 px-4 min-h-screen`}>
                 {
                     loading && 
-                    <div className="text-center flex items-center justify-center min-h-screen">
-                        <Spinner />
+                    <div className="text-center flex flex-col gap-4 items-center justify-start min-h-screen">
+                        {/* <Spinner /> */}
+                        <ImagesLoading />
+                        <ImagesLoading />
                     </div>
                 }
                 {!loading && children}
