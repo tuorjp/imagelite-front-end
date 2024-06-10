@@ -1,4 +1,4 @@
-export const ImagesLoading: React.FC = () => {
+export const ImagesSkeleton: React.FC = () => {
     return (
         <div className="flex flex-col gap-2 sm:flex-col-2 md:flex-col lg:flex-row">
             <div className="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
