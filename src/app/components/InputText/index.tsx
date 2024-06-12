@@ -4,16 +4,17 @@ interface InputTextProps {
     placeholder?: string;
     id?: string;
     value?: string;
+    type?: string;
 }
 
 interface FieldErrorProps {
     error: any | null
 }
 
-export const InputText: React.FC<InputTextProps> = ({ onChange, style, placeholder, id, value }) => {
+export const InputText: React.FC<InputTextProps> = ({ onChange, style, placeholder, id, value, type="text" }) => {
     return (
         <input 
-            type="text" 
+            type={type} 
             className={`${style} border px-3 py-2 rounded-md text-gray-900`}
             onChange={onChange}
             placeholder={placeholder}
