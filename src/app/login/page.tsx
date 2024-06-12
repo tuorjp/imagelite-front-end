@@ -2,12 +2,24 @@
 
 import { useState } from "react"
 import { Template } from "../components/Template"
-import { InputText } from "../components/InputText"
+import { FieldError, InputText } from "../components/InputText"
 import { Button } from "../components/Button"
+import { LoginForm, formScheme, validationScheme } from './formScheme'
+import { useFormik } from "formik"
 
 export default function Login() {
     const [loading, setLoading] = useState<boolean>(false)
     const [newUserState, setNewUserState] = useState<boolean>(false)
+
+    const { values, handleChange, handleSubmit, errors } = useFormik<LoginForm>({
+        initialValues: formScheme,
+        validationSchema: validationScheme,
+        onSubmit: onSubmit,
+    })
+
+    function onSubmit(values: LoginForm) {
+        console.log(values)
+    }
     
     return (
         <Template loading={loading}>
@@ -19,7 +31,7 @@ export default function Login() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-2">
+                    <form className="space-y-2" onSubmit={handleSubmit}>
                         {
                             newUserState &&
                             <>
@@ -27,7 +39,8 @@ export default function Login() {
                                     <label className="block text-sm font-medium leading-6 text-gray-900">Name: </label>
                                 </div>
                                 <div className="mt-2">
-                                    <InputText style="w-full" id="name" />
+                                    <InputText style="w-full" id="name" value={values.name} onChange={handleChange}/>
+                                    <FieldError error={errors.name}/>
                                 </div>
                             </>
                         }
@@ -36,14 +49,16 @@ export default function Login() {
                             <label className="block text-sm font-medium leading-6 text-gray-900">Email: </label>
                         </div>
                         <div className="mt-2">
-                            <InputText style="w-full" id="email" />
+                            <InputText style="w-full" id="email" value={values.email} onChange={handleChange}/>
+                            <FieldError error={errors.email}/>
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium leading-6 text-gray-900">Password: </label>
                         </div>
                         <div className="mt-2">
-                            <InputText style="w-full" id="password" type="password" />
+                            <InputText style="w-full" id="password" type="password" value={values.password} onChange={handleChange}/>
+                            <FieldError error={errors.password}/>
                         </div>
 
                         {
@@ -53,7 +68,8 @@ export default function Login() {
                                     <label className="block text-sm font-medium leading-6 text-gray-900">Password Match: </label>
                                 </div>
                                 <div className="mt-2">
-                                    <InputText style="w-full" id="passwordMatch" type="password" />
+                                    <InputText style="w-full" id="passwordMatch" type="password" value={values.passwordMatch} onChange={handleChange} />
+                                    <FieldError error={errors.passwordMatch}/>
                                 </div>
                             </>
                         }
