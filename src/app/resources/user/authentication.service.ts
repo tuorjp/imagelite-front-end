@@ -57,6 +57,32 @@ class AuthService {
     setUserSession(userSessionToken: UserSessionToken) {
         localStorage.setItem(AuthService.AUTH_PARAM, JSON.stringify(userSessionToken))
     }
+
+    getUserSession(): UserSessionToken | null {
+        const authString = localStorage.getItem(AuthService.AUTH_PARAM)
+        if(!authString) {
+            return null
+        }
+
+        const token: UserSessionToken = JSON.parse(authString)
+        return token
+    }
+
+    isSessionValid() {
+        const userSession: UserSessionToken | null = this.getUserSession()
+        if(!userSession) {
+            return false
+        }
+
+        const expiration: number | undefined = userSession.expiration
+        if(expiration) {
+            const expirationDateInMilliSec = expiration * 1000
+            console.log('Expiration Date ', new Date(expirationDateInMilliSec))
+            return new Date() < new Date(expirationDateInMilliSec)
+        }
+
+        return false
+    }
 }
 
 export const useAuth = () => new AuthService()
