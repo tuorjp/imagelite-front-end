@@ -6,10 +6,18 @@ import { FieldError, InputText } from "../components/InputText"
 import { Button } from "../components/Button"
 import { LoginForm, formScheme, validationScheme } from './formScheme'
 import { useFormik } from "formik"
+import { useAuth } from "../resources"
+import { useRouter } from 'next/navigation'
+import { AccessToken, Credentials } from "../resources/user/user.resources"
+import { useNotification } from "../utils/notifications"
 
 export default function Login() {
     const [loading, setLoading] = useState<boolean>(false)
     const [newUserState, setNewUserState] = useState<boolean>(false)
+
+    const auth = useAuth()
+    const notification = useNotification()
+    const router = useRouter()
 
     const { values, handleChange, handleSubmit, errors } = useFormik<LoginForm>({
         initialValues: formScheme,
@@ -17,8 +25,19 @@ export default function Login() {
         onSubmit: onSubmit,
     })
 
-    function onSubmit(values: LoginForm) {
-        console.log(values)
+    async function onSubmit(values: LoginForm) {
+        if(!newUserState) {
+            const credentials : Credentials = { email: values.email, password: values.password }
+
+            try {
+                const accessToken: AccessToken = await auth.authentication(credentials)
+                router.push('/galeria')
+            } catch (error: any) {
+                const message = error?.message
+                console.log(message)
+                notification.notify(message, 'error')
+            }
+        }
     }
     
     return (

@@ -2,7 +2,7 @@
 
 import { Template } from '../components/Template'
 import { ImageCard } from '../components/ImageCard'
-import { useImageService } from '../resources/image/image.services'
+import { useImageService } from '../resources'
 import { Image } from '../resources/image/image.resource'
 import { useState } from 'react'
 import Link from 'next/link'
