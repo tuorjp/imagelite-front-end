@@ -2,8 +2,8 @@ import { AccessToken, Credentials, User, UserSessionToken } from './user.resourc
 import jwt from 'jwt-decode'
 
 class AuthService {
-    baseURL: string = 'http://localhost:8080/v1/users';
-    static AUTH_PARAM: string = '_auth';
+    baseURL: string = 'http://localhost:8080/v1/users'
+    static AUTH_PARAM: string = '_auth'
 
     async authentication(credentials: Credentials): Promise<AccessToken> {
         const response = await fetch(this.baseURL + '/auth', {
@@ -82,6 +82,10 @@ class AuthService {
         }
 
         return false
+    }
+
+    invalidateSession() {
+        localStorage.removeItem(AuthService.AUTH_PARAM)
     }
 }
 
