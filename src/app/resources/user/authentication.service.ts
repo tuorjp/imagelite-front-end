@@ -8,7 +8,7 @@ class AuthService {
     async authentication(credentials: Credentials): Promise<AccessToken> {
         const response = await fetch(this.baseURL + '/auth', {
             method: 'POST',
-            body: JSON.stringify(Credentials),
+            body: JSON.stringify(credentials),
             headers: {
                 'Content-Type': 'application/json'
             }
