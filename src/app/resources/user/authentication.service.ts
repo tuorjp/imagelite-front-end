@@ -55,17 +55,26 @@ class AuthService {
     }
 
     setUserSession(userSessionToken: UserSessionToken) {
-        localStorage.setItem(AuthService.AUTH_PARAM, JSON.stringify(userSessionToken))
+        try {
+            localStorage.setItem(AuthService.AUTH_PARAM, JSON.stringify(userSessionToken))
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     getUserSession(): UserSessionToken | null {
-        const authString = localStorage.getItem(AuthService.AUTH_PARAM)
-        if(!authString) {
+        try {
+            const authString = localStorage.getItem(AuthService.AUTH_PARAM)
+            if(!authString) {
+                return null
+            }
+
+            const token: UserSessionToken = JSON.parse(authString)
+            return token
+        } catch (error) {
+            console.error(error)
             return null
         }
-
-        const token: UserSessionToken = JSON.parse(authString)
-        return token
     }
 
     isSessionValid() {
@@ -85,7 +94,11 @@ class AuthService {
     }
 
     invalidateSession() {
-        localStorage.removeItem(AuthService.AUTH_PARAM)
+        try {
+            localStorage.removeItem(AuthService.AUTH_PARAM)
+        } catch (error) {
+            console.error(error)
+        }
     }
 }
 

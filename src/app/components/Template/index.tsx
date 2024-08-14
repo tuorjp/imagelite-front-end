@@ -1,3 +1,4 @@
+'use client'
 import { ImagesSkeleton } from "../ImagesSkeleton"
 import { ToastContainer } from "react-toastify"
 import { TextSkeleton } from "../TextSkeleton"
